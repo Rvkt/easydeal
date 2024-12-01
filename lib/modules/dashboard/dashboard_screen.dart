@@ -10,6 +10,7 @@ import '../../utils/utils.dart';
 import '../../widgets/banner_carousel.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../data/grid_items_data.dart';
+import '../store/products_screen.dart';
 import 'widgets/deals_of_the_day_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -20,6 +21,54 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  // final List<GridItemData> items = [
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Sofa.png',
+  //       label: 'Living Room',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Bed.png',
+  //       label: 'Bedroom',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Storage.png',
+  //       label: 'Storage',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Study.png',
+  //       label: 'Study',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Dining.png',
+  //       label: 'Dining',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Desk.png',
+  //       label: 'Tables',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //       imagePath: 'assets/icons/Chair.png',
+  //       label: 'Chairs',
+  //       onTap: () {
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(category: category)));
+  //       }),
+  //   GridItemData(
+  //     imagePath: 'assets/icons/Best deal.png',
+  //     label: 'Best Deals',
+  //   ),
+  // ];
 
   @override
   void initState() {
@@ -27,7 +76,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getProducts();
     });
-
   }
 
   getProducts() {
@@ -68,25 +116,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 16),
           // todo: Grid Items
-          SizedBox(
-            height: height * 0.225,
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 4.0,
-                mainAxisSpacing: 4.0,
-                // childAspectRatio: isSmallDevice ? 1 / 1.15 : 1 / 1.2,
-              ),
-              itemCount: items.length,
-              // Use the length of the list
-              itemBuilder: (context, index) {
-                final GridItemData item = items[index]; // Get the item from the list
-                return GridItem(gridItemData: item);
-              },
-            ),
-          ),
+
+          const GridItemsWidget(),
 
           // todo: buy new or refurbished
           const BuyNewRefurbishWidget(),
@@ -103,5 +134,132 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 
+class GridItemsWidget extends StatefulWidget {
+  const GridItemsWidget({super.key});
 
+  @override
+  State<GridItemsWidget> createState() => _GridItemsWidgetState();
+}
+
+class _GridItemsWidgetState extends State<GridItemsWidget> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    final List<GridItemData> items = [
+      GridItemData(
+          imagePath: 'assets/icons/Sofa.png',
+          label: 'Living Room',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Living Room'),
+              ),
+            );
+          }),
+      GridItemData(
+          imagePath: 'assets/icons/Bed.png',
+          label: 'Bedroom',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Bedroom'),
+              ),
+            );
+          }),
+      GridItemData(
+          imagePath: 'assets/icons/Storage.png',
+          label: 'Storage',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Storage'),
+              ),
+            );
+          }),
+      GridItemData(
+          imagePath: 'assets/icons/Study.png',
+          label: 'Study',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Study'),
+              ),
+            );
+          }),
+      GridItemData(
+          imagePath: 'assets/icons/Dining.png',
+          label: 'Dining',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Dining'),
+              ),
+            );
+          }),
+      GridItemData(
+          imagePath: 'assets/icons/Desk.png',
+          label: 'Tables',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Tables'),
+              ),
+            );
+          }),
+      GridItemData(
+          imagePath: 'assets/icons/Chair.png',
+          label: 'Chairs',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductsScreen(category: 'Chairs'),
+              ),
+            );
+          }),
+      GridItemData(
+        imagePath: 'assets/icons/Best deal.png',
+        label: 'Best Deals',
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductsScreen(category: 'Best Deals'),
+            ),
+          );
+        },
+      ),
+    ];
+
+    ScreenUtil.init(context);
+    double width = ScreenUtil.screenWidth;
+    double height = ScreenUtil.screenHeight;
+    return SizedBox(
+      height: height * 0.225,
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
+          // childAspectRatio: isSmallDevice ? 1 / 1.15 : 1 / 1.2,
+        ),
+        itemCount: items.length,
+        // Use the length of the list
+        itemBuilder: (context, index) {
+          final GridItemData item = items[index]; // Get the item from the list
+          return GridItem(gridItemData: item);
+        },
+      ),
+    );
+  }
+}
 

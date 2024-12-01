@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/deals_of_the_day.dart';
+import '../data/sample_products.dart';
 import '../modules/store/product.dart';
 
 class ProductProvider with ChangeNotifier {

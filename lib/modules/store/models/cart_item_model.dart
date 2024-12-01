@@ -9,6 +9,7 @@ class CartItem extends Product {
     required super.price,
     required super.image,
     required super.discount,
+    required super.category,
     this.quantity = 1,
   });
 }

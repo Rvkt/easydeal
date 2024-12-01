@@ -39,6 +39,7 @@ class CartProvider with ChangeNotifier {
           price: product.price,
           image: product.image,
           discount: product.discount,
+          category: product.category,
           quantity: 1,
         ),
       );

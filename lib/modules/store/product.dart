@@ -2,8 +2,9 @@ class Product {
    int id;
    String name;
    double price;
-   String image; // Path or URL to the image
-   int discount; // Discount in percentage
+   String image;
+   int discount;
+   String category;
 
   Product({
     required this.id,
@@ -11,5 +12,6 @@ class Product {
     required this.price,
     required this.image,
     required this.discount,
+    required this.category,
   });
 }

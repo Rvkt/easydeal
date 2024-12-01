@@ -6,6 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../provider/cart_provider.dart';
 import '../provider/location_provider.dart';
 import '../utils/utils.dart';
 import 'package:badges/badges.dart' as badges;
@@ -107,13 +108,37 @@ class _CustomAppBarState extends State<CustomAppBar> {
             //     Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
             //   },
             // ),
-            IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
+
+            Consumer<CartProvider>(
+              builder: (context, cartProvider, child) {
+                return badges.Badge(
+                  badgeContent: Text(
+                    '${cartProvider.cartItems.length}',  // Display the cart count
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const CartScreen()),
+                      );
+                    },
+                  ),
+                );
               },
             ),
-            const SizedBox(width: 8),
+
+            // IconButton(
+            //   icon: const Icon(Icons.shopping_cart),
+            //   onPressed: () {
+            //     Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
+            //   },
+            // ),
+            const SizedBox(width: 24),
           ],
         ],
         bottom: _isSearching

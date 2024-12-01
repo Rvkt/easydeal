@@ -1,4 +1,5 @@
 import 'package:easydeal/modules/deals/widgets/deals_card.dart';
+import 'package:easydeal/modules/store/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,9 @@ class DealsOfTheDayWidget extends StatelessWidget {
     ScreenUtil.init(context);
     double width = ScreenUtil.screenWidth;
     double height = ScreenUtil.screenHeight;
+
+    String category = 'DealsOfTheDay';
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -35,7 +39,7 @@ class DealsOfTheDayWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const DealsScreen(),
+                      builder: (context) => const ProductsScreen(category: 'DealsOfTheDay'),
                     ),
                   );
                 },
@@ -56,7 +60,7 @@ class DealsOfTheDayWidget extends StatelessWidget {
           // Products Row
           Consumer<ProductProvider>(
             builder: (context, provider, child) {
-              List<Product> products = provider.products;
+              List<Product> products = provider.products.where((product) => product.category == category).toList();
               return SizedBox(
                 height: height * 0.325,
                 child: ListView.builder(
