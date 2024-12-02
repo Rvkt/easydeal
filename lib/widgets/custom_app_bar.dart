@@ -100,7 +100,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
               },
             ),
 
-
             // badges.Badge(
             //   badgeContent: const Text('3'),
             //   child: const Icon(Icons.shopping_cart),
@@ -113,7 +112,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               builder: (context, cartProvider, child) {
                 return badges.Badge(
                   badgeContent: Text(
-                    '${cartProvider.cartItems.length}',  // Display the cart count
+                    '${cartProvider.cartItems.length}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -124,7 +123,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const CartScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => const CartScreen(),
+                        ),
                       );
                     },
                   ),
@@ -143,40 +144,38 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ],
         bottom: _isSearching
             ? PreferredSize(
-          preferredSize: const Size.fromHeight(48.0), // Height of the bottom widget
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            color: Colors.white,
-            child: TextField(
-              autofocus: true,
-              style: const TextStyle(color: Colors.black),
-              decoration: const InputDecoration(
-                hintText: 'Search...',
-                hintStyle: TextStyle(color: Colors.black54),
-                // border: UnderlineInputBorder(
-                //   borderSide: BorderSide(color: Colors.black12),
-                // ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: AppPalette.primaryColor), // You can change the color to anything you want
+                preferredSize: const Size.fromHeight(48.0), // Height of the bottom widget
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  color: Colors.white,
+                  child: TextField(
+                    autofocus: true,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.black54),
+                      // border: UnderlineInputBorder(
+                      //   borderSide: BorderSide(color: Colors.black12),
+                      // ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: AppPalette.primaryColor), // You can change the color to anything you want
+                      ),
+                      prefixIcon: Icon(Icons.search, color: AppPalette.primaryColor),
+                    ),
+                    onSubmitted: (query) {
+                      // Handle the search query submission
+                      print('Search query: $query');
+                      setState(() {
+                        _isSearching = false;
+                      });
+                    },
+                  ),
                 ),
-                prefixIcon: Icon(Icons.search, color: AppPalette.primaryColor),
-              ),
-              onSubmitted: (query) {
-                // Handle the search query submission
-                print('Search query: $query');
-                setState(() {
-                  _isSearching = false;
-                });
-              },
-            ),
-          )
-          ,
-        )
+              )
             : null,
       );
     });
   }
-
 
   Shimmer _location(BuildContext context) {
     return Shimmer.fromColors(

@@ -20,50 +20,59 @@ class CartItemWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
               child: Image.asset(
                 item.image,
-                width: 60,
-                height: 60,
+                width: 88,
+                height: 88,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     item.name,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  // Display total price for the item (price * quantity)
-                  Text(
-                    '₹ ${(item.price).toStringAsFixed(2)}',
-                    style: const TextStyle(color: Colors.grey),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '₹ ${(item.price).toStringAsFixed(2)}',
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                      Row(
+                        children: [
+
+                          const SizedBox(height: 4),
+                          IconButton(
+                            onPressed: onRemove,
+                            icon: const Icon(Icons.remove),
+                          ),
+                          Text('${item.quantity}'),
+                          IconButton(
+                            onPressed: onAdd,
+                            icon: const Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: onRemove,
-                  icon: const Icon(Icons.remove),
-                ),
-                Text('${item.quantity}'),
-                IconButton(
-                  onPressed: onAdd,
-                  icon: const Icon(Icons.add),
-                ),
-              ],
-            ),
+
+
           ],
         ),
       ),

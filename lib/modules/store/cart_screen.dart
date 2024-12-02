@@ -63,6 +63,15 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
+  void clearCart () {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    cartProvider.clearCart();
+
+    _listKey.currentState?.setState(() {
+      // Trigger the animation or update the UI if necessary
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -177,6 +186,7 @@ class _CartScreenState extends State<CartScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Order placed!')),
                                   );
+                                  clearCart();
                                 },
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor: AppPalette.primaryColor,

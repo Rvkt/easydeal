@@ -98,6 +98,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           return Card(
                             color: Colors.white,
                             clipBehavior: Clip.hardEdge,
+                            elevation: 4,
                             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,22 +117,26 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: 8),
-                                      Text(
-                                        product.name,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          product.name,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                // const SizedBox(height: 4),
                                 Container(
                                   color: Colors.amber.shade200,
                                   padding: const EdgeInsets.all(8),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       const SizedBox(width: 8),
                                       Text(
@@ -152,27 +157,117 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         ),
                                       ),
                                       const Spacer(),
-                                      OutlinedButton(
-                                        onPressed: () {
-                                          _moveToCart(index, product);
+                                      // OutlinedButton(
+                                      //   onPressed: () {
+                                      //     _moveToCart(index, product);
+                                      //   },
+                                      //   style: OutlinedButton.styleFrom(
+                                      //     backgroundColor: AppPalette.primaryColor,
+                                      //     foregroundColor: Colors.white,
+                                      //     side: const BorderSide(color: AppPalette.primaryColor, width: 2),
+                                      //     shape: RoundedRectangleBorder(
+                                      //       borderRadius: BorderRadius.circular(8),
+                                      //     ),
+                                      //     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                      //   ),
+                                      //   child: const Text(
+                                      //     'Add To Cart',
+                                      //     style: TextStyle(
+                                      //       fontSize: 12,
+                                      //       fontWeight: FontWeight.bold,
+                                      //     ),
+                                      //   ),
+                                      // ),
+
+                                      // OutlinedButton(
+                                      //   onPressed: () {
+                                      //     final cartProvider = Provider.of<CartProvider>(context, listen: false);
+                                      //     if (!cartProvider.isInCart(product)) {
+                                      //       cartProvider.addToCart(product); // Add the product to the cart
+                                      //     }
+                                      //   },
+                                      //   style: OutlinedButton.styleFrom(
+                                      //     backgroundColor: AppPalette.primaryColor,
+                                      //     foregroundColor: Colors.white,
+                                      //     side: const BorderSide(color: AppPalette.primaryColor, width: 2),
+                                      //     shape: RoundedRectangleBorder(
+                                      //       borderRadius: BorderRadius.circular(8),
+                                      //     ),
+                                      //     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                      //   ),
+                                      //   child: Consumer<CartProvider>(
+                                      //     builder: (context, cartProvider, child) {
+                                      //       // Check if the product is already in the cart
+                                      //       final isAdded = cartProvider.isInCart(product);
+                                      //       return Text(
+                                      //         isAdded ? 'Added' : 'Add To Cart',
+                                      //         style: const TextStyle(
+                                      //           fontSize: 12,
+                                      //           fontWeight: FontWeight.bold,
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //   ),
+                                      // ),
+
+                                      Consumer<CartProvider>(
+                                        builder: (context, cartProvider, child) {
+                                          final isAdded = cartProvider.isInCart(product);
+
+                                          if (isAdded) {
+                                            // If the product is in the cart, show the quantity management UI
+                                            final cartItem = cartProvider.getCartItem(product);
+                                            return OutlinedButton(
+                                              onPressed: () {
+                                                // cartProvider.addToCart(product);
+                                              },
+                                              style: OutlinedButton.styleFrom(
+                                                backgroundColor: AppPalette.accentColor,
+                                                foregroundColor: Colors.white,
+                                                side: const BorderSide(color: AppPalette.accentColor, width: 2),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                                              ),
+                                              child: const Text(
+                                                'Added To Cart',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            // If the product is not in the cart, show the "Add To Cart" button
+                                            return OutlinedButton(
+                                              onPressed: () {
+                                                cartProvider.addToCart(product);
+                                              },
+                                              style: OutlinedButton.styleFrom(
+                                                backgroundColor: AppPalette.primaryColor,
+                                                foregroundColor: Colors.white,
+                                                side: const BorderSide(color: AppPalette.primaryColor, width: 2),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                              ),
+                                              child: const Text(
+                                                'Add To Cart',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            );
+                                          }
                                         },
-                                        style: OutlinedButton.styleFrom(
-                                          backgroundColor: AppPalette.primaryColor,
-                                          foregroundColor: Colors.white,
-                                          side: const BorderSide(color: AppPalette.primaryColor, width: 2),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(8),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                        ),
-                                        child: const Text(
-                                          'Add To Cart',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
                                       ),
+
+
+
+
 
                                     ],
                                   ),

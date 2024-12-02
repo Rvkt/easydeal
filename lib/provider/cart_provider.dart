@@ -5,7 +5,7 @@ import '../modules/store/product.dart';
 
 
 class CartProvider with ChangeNotifier {
-  List<CartItem> _cartItems = [];
+  final List<CartItem> _cartItems = [];
   List<CartItem> get cartItems => _cartItems;
 
   int? _totalQuantity;
@@ -22,6 +22,10 @@ class CartProvider with ChangeNotifier {
   setTotalPrice(double? value) {
     _totalPrice = value;
     notifyListeners();
+  }
+
+  CartItem getCartItem(Product product) {
+    return _cartItems.firstWhere((cartItem) => cartItem.id == product.id);
   }
 
 
@@ -44,10 +48,13 @@ class CartProvider with ChangeNotifier {
         ),
       );
 
-      double totalPrice = _cartItems.fold(0.0, (total, item) => total + (item.price * item.quantity));
-      int totalQuantity = _cartItems.fold(0, (total, item) => total + item.quantity);
-      setTotalQuantity(totalQuantity);
-      setTotalPrice(totalPrice);
+      // Update totals
+      _updateCartTotals();
+
+      // double totalPrice = _cartItems.fold(0.0, (total, item) => total + (item.price * item.quantity));
+      // int totalQuantity = _cartItems.fold(0, (total, item) => total + item.quantity);
+      // setTotalQuantity(totalQuantity);
+      // setTotalPrice(totalPrice);
 
     } else {
       // If the product is already in the cart, increase its quantity
@@ -58,6 +65,19 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+  void _updateCartTotals() {
+    double totalPrice = _cartItems.fold(0.0, (total, item) => total + (item.price * item.quantity));
+    int totalQuantity = _cartItems.fold(0, (total, item) => total + item.quantity);
+
+    setTotalPrice(totalPrice);
+    setTotalQuantity(totalQuantity);
+  }
+
+  bool isInCart(Product product) {
+    return _cartItems.any((cartItem) => cartItem.id == product.id);
+  }
+
   // Remove an item from the cart
   void removeFromCart(CartItem item) {
     _cartItems.remove(item);
@@ -66,6 +86,14 @@ class CartProvider with ChangeNotifier {
     int totalQuantity = _cartItems.fold(0, (total, item) => total + item.quantity);
     setTotalQuantity(totalQuantity);
     setTotalPrice(totalPrice);
+
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    _totalPrice = 0.0;
+    _totalQuantity = 0;
 
     notifyListeners();
   }
@@ -85,18 +113,13 @@ class CartProvider with ChangeNotifier {
   void decrementQuantity(int index) {
     if (_cartItems[index].quantity > 1) {
       _cartItems[index].quantity--;
-      double totalPrice = _cartItems.fold(0.0, (total, item) => total + (item.price * item.quantity));
-      int totalQuantity = _cartItems.fold(0, (total, item) => total + item.quantity);
-      setTotalQuantity(totalQuantity);
-      setTotalPrice(totalPrice);
+      // _updateCartTotals();
     } else {
-      double totalPrice = _cartItems.fold(0.0, (total, item) => total + (item.price * item.quantity));
-      int totalQuantity = _cartItems.fold(0, (total, item) => total + item.quantity);
-      setTotalQuantity(totalQuantity);
-      setTotalPrice(totalPrice);
+      // _updateCartTotals();
       _cartItems.removeAt(index);
 
     }
+    _updateCartTotals();
     notifyListeners();
   }
 }
