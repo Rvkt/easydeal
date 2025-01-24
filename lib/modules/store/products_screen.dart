@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easydeal/data/deals_of_the_day.dart';
 import 'package:easydeal/modules/store/product.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +122,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          product.name,
+                                          '${product.id}. ${product.name}',
                                           maxLines: 2,
                                           style: const TextStyle(
                                             fontSize: 14,
@@ -157,59 +159,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         ),
                                       ),
                                       const Spacer(),
-                                      // OutlinedButton(
-                                      //   onPressed: () {
-                                      //     _moveToCart(index, product);
-                                      //   },
-                                      //   style: OutlinedButton.styleFrom(
-                                      //     backgroundColor: AppPalette.primaryColor,
-                                      //     foregroundColor: Colors.white,
-                                      //     side: const BorderSide(color: AppPalette.primaryColor, width: 2),
-                                      //     shape: RoundedRectangleBorder(
-                                      //       borderRadius: BorderRadius.circular(8),
-                                      //     ),
-                                      //     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                                      //   ),
-                                      //   child: const Text(
-                                      //     'Add To Cart',
-                                      //     style: TextStyle(
-                                      //       fontSize: 12,
-                                      //       fontWeight: FontWeight.bold,
-                                      //     ),
-                                      //   ),
-                                      // ),
-
-                                      // OutlinedButton(
-                                      //   onPressed: () {
-                                      //     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-                                      //     if (!cartProvider.isInCart(product)) {
-                                      //       cartProvider.addToCart(product); // Add the product to the cart
-                                      //     }
-                                      //   },
-                                      //   style: OutlinedButton.styleFrom(
-                                      //     backgroundColor: AppPalette.primaryColor,
-                                      //     foregroundColor: Colors.white,
-                                      //     side: const BorderSide(color: AppPalette.primaryColor, width: 2),
-                                      //     shape: RoundedRectangleBorder(
-                                      //       borderRadius: BorderRadius.circular(8),
-                                      //     ),
-                                      //     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                                      //   ),
-                                      //   child: Consumer<CartProvider>(
-                                      //     builder: (context, cartProvider, child) {
-                                      //       // Check if the product is already in the cart
-                                      //       final isAdded = cartProvider.isInCart(product);
-                                      //       return Text(
-                                      //         isAdded ? 'Added' : 'Add To Cart',
-                                      //         style: const TextStyle(
-                                      //           fontSize: 12,
-                                      //           fontWeight: FontWeight.bold,
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //   ),
-                                      // ),
-
                                       Consumer<CartProvider>(
                                         builder: (context, cartProvider, child) {
                                           final isAdded = cartProvider.isInCart(product);
@@ -220,6 +169,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                             return OutlinedButton(
                                               onPressed: () {
                                                 // cartProvider.addToCart(product);
+                                                // log('${cartItem.id}', name: '${cartItem.name}');
+
+                                                cartProvider.incrementQuantity(cartItem.id);
                                               },
                                               style: OutlinedButton.styleFrom(
                                                 backgroundColor: AppPalette.accentColor,
@@ -230,9 +182,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                                 ),
                                                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                                               ),
-                                              child: const Text(
-                                                'Added To Cart',
-                                                style: TextStyle(
+                                              child: Text(
+                                                'In Cart: ${cartItem.quantity}',
+                                                style: const TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.bold,
                                                 ),

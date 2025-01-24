@@ -36,7 +36,7 @@ class CartItemWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    item.name,
+                    '${item.id}. ${item.name}',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
